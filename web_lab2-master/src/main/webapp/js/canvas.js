@@ -7,7 +7,7 @@ function init(){
     const RADIUS=(HEIGHT-50)/10;
     canv.width=WIDTH;
     canv.height=HEIGHT;
-    ctx.fillStyle="#c0c1c3";
+    ctx.fillStyle="#9abdff";
     ctx.fillRect(WIDTH/2, HEIGHT/2, RADIUS, 2*RADIUS);
 
     ctx.moveTo(WIDTH/2,HEIGHT/2);

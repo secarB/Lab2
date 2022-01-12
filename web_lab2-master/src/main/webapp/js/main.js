@@ -31,12 +31,12 @@ $(document).ready(function(){
         if (!validateR()){
             return;
         }
+
         drawFigures();
         drawPoints();
         xFromCanvas=(event.offsetX-canvas.width/2)/DOT;
         yFromCanvas=-(event.offsetY-canvas.height/2)/DOT;
         drawPoint(event.offsetX,event.offsetY);
-
         if(xFromCanvas <= -3||yFromCanvas<-5||xFromCanvas>=3||yFromCanvas>3){
             return;
         }
@@ -89,7 +89,7 @@ function drawPoint(x,y){
     ctx.moveTo(canvas.width/2, y);
     ctx.lineTo(x, y);
     ctx.stroke();
-    ctx.fillStyle = "#e38585";
+    ctx.fillStyle = "#fa1515";
     ctx.arc(x, y, 4, 0, 2 * Math.PI);
     ctx.fill();
     ctx.setLineDash([]);
@@ -100,7 +100,7 @@ function clearCanvas(){
 function drawFigures(){
     clearCanvas();
     const RADIUS=(HEIGHT-50)/10*inputR/2;
-    ctx.fillStyle="#c813e7";
+    ctx.fillStyle="#9abdff";
     ctx.fillRect(WIDTH/2, HEIGHT/2, RADIUS, 2*RADIUS);
     ctx.beginPath();
     ctx.moveTo(WIDTH/2,HEIGHT/2);
