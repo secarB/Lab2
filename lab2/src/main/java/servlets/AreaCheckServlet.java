@@ -21,21 +21,22 @@ public class AreaCheckServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
         Results results = (Results) session.getAttribute("results");
         if (results == null) results = new Results();
-        double x = 0;
-        double y = 0, r = 0;
+
         PrintWriter pw = resp.getWriter();
         long startTime = System.nanoTime();
 
         try {
-                String xString, yString, rString;
-                xString = req.getParameter("x").replace(",", ".");
-                yString = req.getParameter("y").replace(',', '.');
-                rString = req.getParameter("r").replace(",", ".");
-                x = Double.parseDouble(xString);
-                y = Double.parseDouble(yString);
-                r = Double.parseDouble(rString);
+            double x = 0;
+            double y = 0, r = 0;
+            String xString, yString, rString;
+            xString = req.getParameter("x").replace(",", ".");
+            yString = req.getParameter("y").replace(',', '.');
+            rString = req.getParameter("r").replace(",", ".");
+            x = Double.parseDouble(xString);
+            y = Double.parseDouble(yString);
+            r = Double.parseDouble(rString);
             if (isValid(x,y,r)){
-                PointEntry entry = createPointEntry(x,y,r, startTime);
+                PointEntry entry = createPoint(x, y, r, startTime);
                 results.getListWithPoints().add(entry);
                 System.out.println(results.getListWithPoints());
                 session.setAttribute("results", results);
@@ -51,7 +52,7 @@ public class AreaCheckServlet extends HttpServlet {
 
     }
 
-    private PointEntry createPointEntry(double x,double y,double r, long startTime) {
+    private PointEntry createPoint(double x,double y,double r, long startTime) {
         String exT= String.valueOf(new DecimalFormat("#0.0000").format((System.nanoTime() - startTime) / 1e9));
         return new PointEntry(x, y, r,  new SimpleDateFormat("HH:mm:ss").format(new Date()), exT,isInArea(x, y, r));
     }

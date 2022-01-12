@@ -26,6 +26,15 @@ const HEIGHT=400;
 const WIDTH=800;
 const DOT=(HEIGHT-50)/10;
 
+function findNearestY(){
+    let minDifference=Infinity;
+    for (let i = 0; i < Y_VALUES.length; i++) {
+        if (Math.abs(yFromCanvas - Y_VALUES[i]) < minDifference) {
+            minDifference = Math.abs(yFromCanvas - Y_VALUES[i]);
+            inputY = Y_VALUES[i];
+        }
+    }
+}
 $(document).ready(function(){
     canvas.addEventListener("mousedown",function (event) {
         if (!validateR()){
@@ -63,15 +72,6 @@ $(document).ready(function(){
 
 
 });
-function findNearestY(){
-    let minDifference=Infinity;
-    for (let i = 0; i < Y_VALUES.length; i++) {
-        if (Math.abs(yFromCanvas - Y_VALUES[i]) < minDifference) {
-            minDifference = Math.abs(yFromCanvas - Y_VALUES[i]);
-            inputY = Y_VALUES[i];
-        }
-    }
-}
 function drawPoints(){
     let pointX = Array.from(document.getElementsByClassName("coordX")).map(v => v.innerHTML);
     let pointY = Array.from(document.getElementsByClassName("coordY")).map(v => v.innerHTML);
@@ -249,30 +249,26 @@ function validateForm() {
     }
 
 
-
 }
 function sendCheckAreaRequest(x, y, r) {
     return $.post("process", {
-        'x': x,
-        'y': y,
-        'r': r
+        'x': x, 'y': y, 'r': r
     }).done(function (data) {
         if (data === "INVALID VALUES" || data == null || data==="") {
             console.log("INVALID VALUES");
         }
         else {
-            //console.log(data);
             $("#result-table tr:gt(0)").remove();
             let result = JSON.parse(data);
             for (let i in result.response){
-                let newRow = '<tr>';
-                    newRow += '<td class="coordX">' +  result.response[i].xval + '</td>';
-                    newRow += '<td class="coordY">' + result.response[i].yval + '</td>';
-                    newRow += '<td>' + result.response[i].rval + '</td>';
-                    newRow += '<td>' + result.response[i].currentTime + '</td>';
-                    newRow += '<td>' + result.response[i].executeTime + '</td>';
-                    newRow += '<td>' + result.response[i].result + '</td>';
-                    $('#result-table').append(newRow);
+                let table = '<tr>';
+                    table += '<td class="coordX">' +  result.response[i].xval + '</td>';
+                    table += '<td class="coordY">' + result.response[i].yval + '</td>';
+                    table += '<td>' + result.response[i].rval + '</td>';
+                    table += '<td>' + result.response[i].currentTime + '</td>';
+                    table += '<td>' + result.response[i].executeTime + '</td>';
+                    table += '<td>' + result.response[i].result + '</td>';
+                    $('#result-table').append(table);
             }
             }
     })
