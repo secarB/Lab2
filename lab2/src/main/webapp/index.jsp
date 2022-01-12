@@ -1,7 +1,5 @@
-<%@ page import="point.PointEntry" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
-
 <%@ page import="point.PointEntry" %>
 <%@ page import="point.Results" %>
 
